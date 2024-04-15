@@ -1,0 +1,12 @@
+.earthquake-list {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
