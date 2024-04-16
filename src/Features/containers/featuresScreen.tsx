@@ -18,6 +18,7 @@ class FeaturesScreen extends Component<{}, IFeaturesScreenState> {
             total: 0,
             mag_type: "",
         };
+        this.updateUrl();
     }
 
     // INFO: Solicitar datos
@@ -28,6 +29,25 @@ class FeaturesScreen extends Component<{}, IFeaturesScreenState> {
     // INFO: Eliminar suscripciones
     componentWillUnmount() {
         // Implementa la lógica para limpiar suscripciones si es necesario
+    }
+
+    updateUrl(page?: number, per_page?: string | number, mag_type?: string) {
+        const queryParams: {
+            page: string;
+            per_page: string;
+            mag_type?: string;
+        } = {
+            page: `${page ?? this.state.page}`,
+            per_page: `${per_page ?? this.state.per_page}`,
+        };
+
+        if (mag_type || this.state.mag_type)
+            queryParams.mag_type = `${mag_type ?? this.state.page}`;
+
+        const searchParams = new URLSearchParams(queryParams);
+        const queryString = searchParams.toString();
+        const newUrl = `/features?${queryString}`;
+        window.history.pushState(null, "", newUrl);
     }
 
     // INFO: Actualización currentHierarchy
@@ -69,9 +89,11 @@ class FeaturesScreen extends Component<{}, IFeaturesScreenState> {
                     mag_type?: string | string[],
                     per_page?: number | string,
                 ) => {
+                    let mag_type_string: string = "";
+
                     if (page) this.getFeatures(page, this.state.per_page);
                     if (mag_type) {
-                        const mag_type_string =
+                        mag_type_string =
                             typeof mag_type === "string"
                                 ? mag_type
                                 : mag_type.join(",");
@@ -86,6 +108,7 @@ class FeaturesScreen extends Component<{}, IFeaturesScreenState> {
                         this.setState({ per_page: +per_page });
                         this.getFeatures(1, +per_page);
                     }
+                    this.updateUrl(page, per_page, mag_type_string);
                 }}
             />
         );
