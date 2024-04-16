@@ -93,7 +93,7 @@ export default function EarthquakeFeatureCard(props: IFeature) {
     };
 
     return (
-        <Card sx={{ maxWidth: "80vw", minWidth: "50vw", marginBottom: "32px" }}>
+        <Card sx={{ maxWidth: "50vw", minWidth: "40vw", marginBottom: "32px" }}>
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

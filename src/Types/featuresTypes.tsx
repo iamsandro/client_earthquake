@@ -42,13 +42,18 @@ export interface IPagination {
     pages: number;
     page: number;
     total: number;
+    per_page: number;
 }
 
 export interface IFeaturesLayoutProps {
     status: "loading" | "error" | null;
     features: any[];
     pagination: IPagination;
-    getFeatures: (page?: number, mag_type?: string[] | string) => any;
+    getFeatures: (
+        page?: number,
+        mag_type?: string[] | string,
+        per_page?: number | string,
+    ) => any;
 }
 
 export interface IFeaturesScreenState {

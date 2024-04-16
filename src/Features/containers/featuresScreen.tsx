@@ -62,8 +62,13 @@ class FeaturesScreen extends Component<{}, IFeaturesScreenState> {
                     pages: this.state.pages,
                     page: this.state.page,
                     total: this.state.total,
+                    per_page: this.state.per_page,
                 }}
-                getFeatures={(page?: number, mag_type?: string | string[]) => {
+                getFeatures={(
+                    page?: number,
+                    mag_type?: string | string[],
+                    per_page?: number | string,
+                ) => {
                     if (page) this.getFeatures(page, this.state.per_page);
                     if (mag_type) {
                         const mag_type_string =
@@ -76,6 +81,10 @@ class FeaturesScreen extends Component<{}, IFeaturesScreenState> {
                             this.state.per_page,
                             mag_type_string,
                         );
+                    }
+                    if (per_page) {
+                        this.setState({ per_page: +per_page });
+                        this.getFeatures(1, +per_page);
                     }
                 }}
             />

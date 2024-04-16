@@ -11,9 +11,11 @@ class FeatureService {
         mag_type: string,
     ): Promise<any> => {
         const response = await fetch(
-            `${this.base_url}/api/v1/features?page=${page ?? 1}&per_page=${
-                per_page ?? 10
-            }${mag_type ? `&mag_type=${mag_type}` : ""}`,
+            `${
+                this.base_url
+            }/api/v1/features?page=${page}&per_page=${per_page}${
+                mag_type ? `&mag_type=${mag_type}` : ""
+            }`,
         );
 
         if (response.ok) {

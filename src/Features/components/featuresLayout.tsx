@@ -9,7 +9,8 @@ import {
 import "./../featuresScreen.scss";
 import EarthquakeFeatureCard from "./Featurecard";
 import { CircularProgress, Pagination, Stack } from "@mui/material";
-import MultipleSelect from "../../components/select";
+import MultipleSelect from "../../components/MultipleSelect";
+import BasicSelect from "../../components/BasicSelect";
 
 const OPTIONS: string[] = [
     "md",
@@ -24,6 +25,8 @@ const OPTIONS: string[] = [
     "mb_lg",
     "mww",
 ];
+
+const PER_PAGE: number[] = [10, 20, 50, 100];
 
 const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
     const [features, setFeatures] = useState<IFeature[]>();
@@ -50,17 +53,28 @@ const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
                 </Stack>
             </div>
 
-            <br />
-            <br />
-            <div className="">
-                Filtrar por Tipo de Magnitud:
-                <MultipleSelect
-                    options={OPTIONS}
-                    label={"Mag"}
-                    onChange={(value: string | string[]) => {
-                        props.getFeatures(undefined, value);
-                    }}
-                />
+            <div className="center">
+                <div className="">
+                    <p className="mb-1">Features por página</p>
+                    <BasicSelect
+                        default={props.pagination.per_page}
+                        options={PER_PAGE}
+                        label="Per page"
+                        onChange={(value: number | string) => {
+                            props.getFeatures(undefined, undefined, value);
+                        }}
+                    />
+                </div>
+                <div className="">
+                    <p>Filtrar por Tipo de Magnitud:</p>
+                    <MultipleSelect
+                        options={OPTIONS}
+                        label={"Mag"}
+                        onChange={(value: string | string[]) => {
+                            props.getFeatures(undefined, value);
+                        }}
+                    />
+                </div>
             </div>
 
             <br />
@@ -76,9 +90,18 @@ const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
             ) : (
                 <div className="">
                     <div className="center">
-                        {features?.map((item: any) => (
-                            <EarthquakeFeatureCard key={item.id} {...item} />
-                        ))}
+                        {features?.length ? (
+                            features?.map((item: IFeature) => (
+                                <EarthquakeFeatureCard
+                                    key={item.id}
+                                    {...item}
+                                />
+                            ))
+                        ) : (
+                            <h1>
+                                Lo sentimos, no tenemos features que mostrar
+                            </h1>
+                        )}
                     </div>
                 </div>
             )}
