@@ -7,7 +7,7 @@ import {
 } from "../../Types/featuresTypes";
 
 import "./../featuresScreen.scss";
-import RecipeReviewCard from "./card";
+import EarthquakeFeatureCard from "./Featurecard";
 import { CircularProgress, Pagination, Stack } from "@mui/material";
 import MultipleSelect from "../../components/select";
 
@@ -38,16 +38,6 @@ const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
         <div className="card-list">
             <h1>Features list</h1>
 
-            <MultipleSelect
-                options={OPTIONS}
-                label={"Mag"}
-                onChange={(value: string | string[]) => {
-                    props.getFeatures(undefined, value);
-                }}
-            />
-            <br />
-            <br />
-
             <div className="center">
                 <Stack spacing={2}>
                     <Pagination
@@ -60,6 +50,22 @@ const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
                 </Stack>
             </div>
 
+            <br />
+            <br />
+            <div className="">
+                Filtrar por Tipo de Magnitud:
+                <MultipleSelect
+                    options={OPTIONS}
+                    label={"Mag"}
+                    onChange={(value: string | string[]) => {
+                        props.getFeatures(undefined, value);
+                    }}
+                />
+            </div>
+
+            <br />
+            <br />
+
             {props.status === "loading" ? (
                 <div style={{ justifyContent: "center" }}>
                     <h1>Estamos cargando datos, Espere un momento por favor</h1>
@@ -71,7 +77,7 @@ const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
                 <div className="">
                     <div className="center">
                         {features?.map((item: any) => (
-                            <RecipeReviewCard key={item.id} {...item} />
+                            <EarthquakeFeatureCard key={item.id} {...item} />
                         ))}
                     </div>
                 </div>

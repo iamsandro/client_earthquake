@@ -53,12 +53,8 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
         duration: theme.transitions.duration.shortest,
     }),
 }));
-const action = (
-    <Button color="secondary" size="small">
-        lorem ipsum dolorem
-    </Button>
-);
-export default function RecipeReviewCard(props: IFeature) {
+
+export default function EarthquakeFeatureCard(props: IFeature) {
     const [expanded, setExpanded] = React.useState({ id: "", state: false });
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
