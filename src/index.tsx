@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { SnackbarProvider } from "notistack";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import FeaturesScreen from "./Features";
+import NotFoundLayout from "./NotFound/notFountLayout";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement,
@@ -11,7 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <SnackbarProvider maxSnack={3}>
-            <App />
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </SnackbarProvider>
     </React.StrictMode>,
 );

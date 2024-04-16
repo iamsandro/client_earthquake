@@ -11,7 +11,7 @@ import EarthquakeFeatureCard from "./Featurecard";
 import { CircularProgress, Pagination, Stack } from "@mui/material";
 import MultipleSelect from "../../components/MultipleSelect";
 import BasicSelect from "../../components/BasicSelect";
-
+import { useNavigate } from "react-router-dom";
 const OPTIONS: string[] = [
     "md",
     "ml",
@@ -31,6 +31,7 @@ const PER_PAGE: number[] = [10, 20, 50, 100];
 const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
     const [features, setFeatures] = useState<IFeature[]>();
     const [pagination, setPagination] = useState<IPagination>();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setFeatures(props.features);
@@ -46,9 +47,12 @@ const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
                     <Pagination
                         count={pagination?.pages || 0}
                         color="primary"
-                        onChange={(e: any) =>
-                            props.getFeatures(+e.target.textContent)
-                        }
+                        onChange={(e: any) => {
+                            props.getFeatures(+e.target.textContent);
+                            navigate(
+                                `?page=${e.target.textContent}&per_page=${pagination?.per_page}`,
+                            );
+                        }}
                     />
                 </Stack>
             </div>
@@ -62,6 +66,7 @@ const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
                         label="Per page"
                         onChange={(value: number | string) => {
                             props.getFeatures(undefined, undefined, value);
+                            navigate(`?page=${1}&per_page=${value}`);
                         }}
                     />
                 </div>
@@ -72,6 +77,15 @@ const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
                         label={"Mag"}
                         onChange={(value: string | string[]) => {
                             props.getFeatures(undefined, value);
+                            navigate(
+                                `?page=${1}&per_page=${
+                                    pagination?.per_page
+                                }&mag=${
+                                    typeof value === "string"
+                                        ? value
+                                        : value.join(",")
+                                }`,
+                            );
                         }}
                     />
                 </div>

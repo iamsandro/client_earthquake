@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import FeatureService from "../../services/featuresService";
 import FeaturesLayout from "../components/featuresLayout";
 import { IFeaturesScreenState } from "../../Types/featuresTypes";
+interface IFeaturesScreenProps {
+    navigate: any;
+}
 
 class FeaturesScreen extends Component<{}, IFeaturesScreenState> {
     private featuresService = new FeatureService();
@@ -18,12 +21,15 @@ class FeaturesScreen extends Component<{}, IFeaturesScreenState> {
             total: 0,
             mag_type: "",
         };
-        this.updateUrl();
+        // this.updateUrl();
     }
 
     // INFO: Solicitar datos
     componentDidMount() {
         this.getFeatures(this.state.page, this.state.per_page);
+        // console.log({ holi: this.props.navigate });
+
+        // this.props.history.push(
     }
 
     // INFO: Eliminar suscripciones
@@ -108,7 +114,7 @@ class FeaturesScreen extends Component<{}, IFeaturesScreenState> {
                         this.setState({ per_page: +per_page });
                         this.getFeatures(1, +per_page);
                     }
-                    this.updateUrl(page, per_page, mag_type_string);
+                    // this.updateUrl(page, per_page, mag_type_string);
                 }}
             />
         );
