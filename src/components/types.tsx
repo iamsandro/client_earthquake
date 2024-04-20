@@ -1,7 +1,9 @@
 export interface IMultipleSelect {
-    options: string[];
+    default?: any;
+    options: any[];
     label: string;
-    onChange: (value: string | string[]) => any;
+    onChange: (value: any) => any;
+    basic_select?: boolean;
 }
 
 export interface IBasicSelect {

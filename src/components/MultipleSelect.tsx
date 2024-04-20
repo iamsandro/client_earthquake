@@ -19,12 +19,11 @@ const MenuProps = {
     },
 };
 
-function getStyles(name: string, personName: string[], theme: Theme) {
+function getStyles(name: string, option: string[], theme: Theme) {
     return {
-        fontWeight:
-            personName.indexOf(name) === -1
-                ? theme.typography.fontWeightRegular
-                : theme.typography.fontWeightMedium,
+        fontWeight: theme.typography.fontWeightMedium,
+        fontFamily: "victor mono",
+        color: "red",
     };
 }
 
@@ -36,6 +35,7 @@ export default function MultipleSelect(props: IMultipleSelect) {
         const {
             target: { value },
         } = event;
+        console.log("Ruben: handleChange -> value", value);
         setPersonName(
             // On autofill we get a stringified value.
             typeof value === "string" ? value.split(",") : value,
@@ -44,7 +44,7 @@ export default function MultipleSelect(props: IMultipleSelect) {
     };
 
     return (
-        <div>
+        <React.Fragment>
             <FormControl sx={{ m: 1, width: 300 }}>
                 <InputLabel id="demo-multiple-name-label">
                     {props.label ?? "label"}
@@ -52,23 +52,38 @@ export default function MultipleSelect(props: IMultipleSelect) {
                 <Select
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"
-                    multiple
+                    multiple={props.basic_select ? false : true}
                     value={personName}
                     onChange={handleChange}
                     input={<OutlinedInput label="Name" />}
                     MenuProps={MenuProps}
+                    sx={[
+                        {
+                            "&:hover": {
+                                color: "blue",
+                                backgroundColor: "white",
+                            },
+                        },
+                    ]}
                 >
                     {props.options?.map((option) => (
                         <MenuItem
                             key={option}
                             value={option}
                             style={getStyles(option, personName, theme)}
+                            selected={
+                                props.default &&
+                                !isNaN(option) &&
+                                props.default == option
+                                    ? true
+                                    : false
+                            }
                         >
                             {option}
                         </MenuItem>
                     ))}
                 </Select>
             </FormControl>
-        </div>
+        </React.Fragment>
     );
 }

@@ -38,6 +38,15 @@ const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
         setPagination(props.pagination);
     }, [props.features]);
 
+    // useEffect(() => {
+
+    //     Parsea los parámetros de la URL
+    //     const params = new URLSearchParams(search);
+    //     const param1 = params.get("param1"); // valor1
+    //     const param2 = params.get("param2");
+    //     console.log("holiisss", param1, param2);
+    // }, [navigate]);
+
     return (
         <div className="card-list">
             <h1>Features list</h1>
@@ -60,7 +69,7 @@ const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
             <div className="center">
                 <div className="">
                     <p className="mb-1">Features por página</p>
-                    <BasicSelect
+                    <MultipleSelect
                         default={props.pagination.per_page}
                         options={PER_PAGE}
                         label="Per page"
@@ -68,6 +77,7 @@ const FeaturesLayout: FC<IFeaturesLayoutProps> = (props) => {
                             props.getFeatures(undefined, undefined, value);
                             navigate(`?page=${1}&per_page=${value}`);
                         }}
+                        basic_select={true}
                     />
                 </div>
                 <div className="">
